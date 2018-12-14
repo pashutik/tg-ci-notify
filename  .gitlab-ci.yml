@@ -1,0 +1,18 @@
+stages:
+- deploy
+
+deploy:
+  stage: deploy
+  # ...
+
+notify_success:
+  stage: deploy
+  script:
+  - sh .ci-notify.sh ✅
+  when: on_success
+
+notify_error:
+  stage: deploy
+  script:
+  - sh .ci-notify.sh ❌
+  when: on_failure
