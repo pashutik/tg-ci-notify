@@ -1,18 +1,30 @@
+
+image: your:image
+ 
 stages:
-- deploy
+  - build
+  - test
+  - error notification
+ 
+build:
+  stage: build
+  tags:
+    - test
+  script:
+    - script_for_build
 
 deploy:
   stage: deploy
-  # ...
-
-notify_success:
-  stage: deploy
+  tags:
+    - test
   script:
-  - sh .ci-notify.sh ✅
-  when: on_success
+    - script_for_deploy
+    - bash .ci-notify.sh success
 
-notify_error:
-  stage: deploy
+notify:
+  stage: error notification
+  tags:
+    - test
   script:
-  - sh .ci-notify.sh ❌
+    - bash .ci-notify.sh faile
   when: on_failure
