@@ -1,11 +1,18 @@
-
 image: your:image
- 
+  
 stages:
+  - start notification
   - build
-  - test
+  - deploy
   - error notification
- 
+
+start_notify:
+  stage: start notification
+  tags:
+    - test
+  script:
+    - bash .ci-notify.sh start
+
 build:
   stage: build
   tags:
